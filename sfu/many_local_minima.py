@@ -158,3 +158,27 @@ def langermann(x):
         new = c[i] * np.exp(-inner / np.pi) * np.cos(np.pi * inner)
         outer += new
     return -outer
+
+
+def levy(x):
+    """
+    Dimensions: d
+    The function is usually evaluated on the square xi ∈ [-10, 10], for all i = 1, 2.
+    min f(x) = 0, at x = (1, ..., 1)
+    :param x: 函数参数
+    :return 函数值
+    """
+    d = len(x)
+    w = []
+    for i in range(d):
+        w.append(1 + (x[i] - 1) / 4)
+
+    term1 = np.power(np.sin(np.pi * w[0]), 2)
+    term3 = np.power(w[d-1] - 1, 2) * (1 + np.power(np.sin(2 * np.pi * w[d - 1]), 2))
+
+    item_sum = 0
+    for i in range(d - 1):
+        wi = w[i]
+        new = np.power((wi - 1), 2) * (1 + 10 * np.power(np.sin(np.pi * wi + 1), 2))
+        item_sum += new
+    return term1 + item_sum + term3
